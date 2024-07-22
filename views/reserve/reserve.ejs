@@ -1,0 +1,83 @@
+<% layout("/layouts/boilerplat") %>
+
+<form action="/listings/<%= listing._id %>/reserve" method="POST" novalidate class="needs-validation">
+  <div class="row mt-3">
+  <div class="col-9 offset-2">     
+   
+
+              <div class="row">
+                <div class="mb-3 col-md-6">
+                    <label for="adult" class="form-label">Adults</label>
+                    <input type="number" name="reserve[adult]" id="adult" class="form-control" min="1" max="4" required>
+                    <div class="valid-feedback">Looks Good!</div>
+                    <div class="invalid-feedback">Pleas enter number of adult!</div>
+                </div>
+    
+                <div class="mb-3 col-md-6">
+                    <label for="child" class="form-label">Children</label>
+                    <input type="number" name="reserve[children]" id="child" class="form-control" value="0" min="0" max="4">
+                    <div class="valid-feedback">Looks Good!</div>
+                </div>
+            </div>      
+
+
+          
+
+          <div class="row">
+              <div class="mb-3 col-md-6">
+                <label for="checkin" class="form-label">Check-IN Date</label>
+                <input type="date" name="reserve[checkin]" id="checkin" class="form-control" required>
+                <div class="valid-feedback">Looks Good!</div>
+                <div class="invalid-feedback">Pleas enter Check-IN Date</div>
+              </div>
+ 
+              <div class="mb-3 col-md-6">
+                <label for="checkout" class="form-label">Check-OUT Date</label>
+                <input type="date" name="reserve[checkout]" id="checkout" class="form-control" required>
+                <div class="valid-feedback">Looks Good!</div>
+                <div class="invalid-feedback">Pleas enter Check-Out Date</div>
+              </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-md-6">
+              <label for="mobile" class="form-label">Mobile Number</label>
+              <input
+              type="number"
+              id="mobile"
+              name="reserve[mobile]"
+              placeholder="+91 xxxx xxx xxx"
+              class="form-control"
+              min="6000000000"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+              required
+              />
+              <div class="valid-feedback">Looks Good!</div>
+              <div class="invalid-feedback">Pleas enter Mobile Number</div>
+          </div>
+
+            <div class="mb-3 col-md-6 mt-4">
+              <b>&#8377;<span id="totalPrice">0</span></b>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <button class="btn btn-dark add-btn mt-3 mb-4 col-12">Confirm Booking</button>
+          </div>
+
+          <div class="mb-3 col-md-6">
+            <a href="/listings/<%=listing._id%>" class="btn btn-outline-secondary rounded-2 mt-3 mb-4 col-12">Go Back</a>
+          </div>
+      </div>
+
+  </div>
+</div>          
+  </div>
+  </div>
+</form>
+
+<script>
+  // Inline script to initialize JavaScript variables
+  let pricePerNight = <%= JSON.stringify(listing.price) %>; // Assuming listing.price is available
+</script>
+
