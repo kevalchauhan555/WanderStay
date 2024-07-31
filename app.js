@@ -32,7 +32,7 @@ if (process.env.NODE_ENV != "production") {
   app.engine("ejs", ejsMate);
   app.use(express.static(path.join(__dirname, "/public")));
   
-  //const mongoURL = "mongodb://127.0.0.1:27017/wanderlust";
+  //const dbUrl = "mongodb://127.0.0.1:27017/wanderlust";
   const dbUrl = process.env.ATLASDB_URLWander;
   main()
     .then(() => {
@@ -57,7 +57,7 @@ if (process.env.NODE_ENV != "production") {
   });
   
   const sessionOptions = {
-    store,
+    //store,
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
@@ -86,26 +86,14 @@ if (process.env.NODE_ENV != "production") {
     next();
   });
   
-  // app.get("/demouser",async (req,res)=>{
-  //     let fakeUser = new User({
-  //         email:"student@gmail.com",
-  //         username:"delta-student"
-  //     });
-  
-  //     let registeredUser = await User.register(fakeUser,"helloworld");
-  //     res.send(registeredUser);
-  // });
-  
+ 
   app.use("/listings", listingsRouter);
   app.use("/listings/:id/reviews", reviewsRouter);
+  app.use("/", reserveRoute);
   app.use("/", userRouter);
-  app.use("/",reserveRoute);
-  app.use("/filter",filterRoute);
-  app.use("/",paymentRoute);
- 
-  app.get("/dummy",(req,res)=>{
-    res.send("hello");
-  })
+  app.use("/filter", filterRoute);
+  app.use("/", paymentRoute);
+
   
   app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found"));
@@ -119,6 +107,6 @@ if (process.env.NODE_ENV != "production") {
   });
  
 
-  app.listen(8585, () => {
-    console.log("Server Start started at port http://localhost:8090/listings");
+  app.listen(8588, () => {
+    console.log("Server Start started at port http://localhost:8588/listings");
   }); 

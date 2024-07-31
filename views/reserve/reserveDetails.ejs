@@ -1,203 +1,204 @@
-<% layout("/layouts/boilerplat") %>
+<%layout("/layouts/boilerplat")%>
 
-    <% for(reserveDetail of reserveDetails) {%>
-        <div class="container col-lg-8 mt-4" style="width: 60rem;">
-            <div class="row">
-                <div class="card mb-4 border-0 shadow">
-                    <div class="row g-0 p-lg-2">
-                        <div class="col-md-5 align-self-center div-img">
-                            <img src="<%= reserveDetail.listing.image.url %>" class="img-fluid rounded"
-                                style="max-height: 169px; min-width: 337.5px;">
-                        </div>
-                        <div class="col-lg-4 col-md-5 px-lg-3 px-md-4 px-0 ">
-                            <div class="mt-md-3 mb-1 col-md-12 mt-lg-4">
-                                <h4 class="text-sm-start">
-                                    <%= reserveDetail.listing.title %>
-                                </h4>
-                            </div>
+    <body>
+        <div class="row row-cols-lg-5 row-cols-12">
+            <% for(reserveDetail of reserveDetails) {%>
+                <!-- <div class="container col-lg-8 mt-4" style="width: 60rem;"> -->
 
+                <div class="card col-lg-5 col-12 mt-4 d-flex ms-lg-5">
+                    <div class="show-card listing-card mt-2">
+                        <img src="<%= reserveDetail.listing.image.url %>" class="rounded"
+                            style="max-height: 250px; width: 100%" />
+                        <h5 class="card-title">
+                            <%= reserveDetail.listing.title %>
+                        </h5>
+                    </div>
 
-                            <div class="mb-1">
-                                <h6 class="d-inline">Guest Name : </h6>
-                                <span class="text-dark fs-6">
+                    <div class="card-body">
+                        <!-- <div class="row d-flex"> -->
+                        <div class="col d-flex justify-content-between">
+                            <div>
+                                <h6 class="d-inline">Guest Name :</h6>
+                                <span class="text-dark">
                                     <b>
                                         <%= currUser.username %>
                                     </b>
                                 </span>
                             </div>
-                            <div class="mb-1">
-                                <h6 class="d-inline">Total : </h6>
-                                <span class="text-dark fs-6">
-                                    <%= reserveDetail.total %>
-                                        </p>
-                                </span>
-                            </div>
-                            <div class="mb-1">
+                            <div>
                                 <h6 class="d-inline">Mobile : </h6>
-                                <span class="text-dark fs-6">
+                                <span class="text-dark">
                                     <%= reserveDetail.mobile %>
                                         </p>
                                 </span>
                             </div>
-                            <div class="mb-1">
-                                <h6 class="mb-1 d-inline">Adults : </h6>
-                                <span class="text-dark fs-6">
-                                    <b>
-                                        <%= reserveDetail.adult %>
-                                    </b>
+                        </div>
+
+                        <div class="col d-flex justify-content-between">
+                            <div>
+                                <h6 class="d-lg-inline d-md-inline">Check-in :</h6>
+                                <span class="text-dark=">
+                                    <%= reserveDetail.checkin.toString().split(" ").slice(1,4).join(" -") %>
                                 </span>
                             </div>
-                            <div class="mb-1">
-                                <h6 class="mb-1 d-inline">Childrens : </h6>
-                                <span class="text-dark fs-6">
-                                    <b>
-                                        <%= reserveDetail.children %>
-                                    </b>
+                            <div class="mb-3">
+                                <h6 class="d-lg-inline d-md-inline">Check-out :</h6>
+                                <span class="text-dark=">
+                                    <%= reserveDetail.checkout.toString().split(" ").slice(1,4).join(" -") %>
                                 </span>
                             </div>
                         </div>
 
-                        <div class="col-md-2 mt-4 py-lg-5 py-md-5 col-lg-3 align-self-center">
-                            <div class="mb-1">
-                                <h6 class="mb-0 d-lg-inline">Check-in : </h6>
-                                <span class="text-dark fs-6">
-                                    <%= reserveDetail.checkin.toString().split(" ").slice(1,4).join(" -") %>
-                                </span>
+                        <div class="col d-flex justify-content-between">
+                            <div>
+                                <div>
+                                    <span class="text-dark">
+                                        <b>Adults :</b><%= reserveDetail.adult %>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="text-dark">
+                                        <b>Childrens :</b><%= reserveDetail.children %>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="mb-1">
-                                <h6 class="mb-0 d-lg-inline">Check-out : </h6>
-                                <span class="text-dark fs-6">
-                                    <%= reserveDetail.checkout.toString().split(" ").slice(1,4).join(" -") %>
-                                </span>
+                            <div>
+                                <span class="fs-4">Total :</span>
+                                <span class="text-dark fs-5"> &#x20B9;<%= reserveDetail.total %> </span>
                             </div>
-
-                            <br>
-                            <a href="/listings"
-                                class="btn btn-outline-dark col-10 rounded-2 fw-bold shadow-none">Home</a>
-                            <br>
-                            <br>
-                            <%if(reserveDetail.payment==null || typeof reserveDetail.payment.status=="undefined" || reserveDetail.payment.status=="failed" ){ %>
+                        </div>
+                        <!-- </div> -->
+                    </div>
+                    <div class="card-footer bg-white mt-4">
+                        <div class="col d-flex align-items-end justify-content-around mt-3">
+                            <%if(reserveDetail.payment==null || typeof reserveDetail.payment.status=="undefined" ||
+                                reserveDetail.payment.status=="failed" ){ %>
                                 <!-- Payment Form -->
                                 <form class="pay-form" method="POST" action="/createOrder">
-                                    <input type="hidden" name="reserveId" value="<%=reserveDetail._id%>">
-                                    <input type="hidden" name="total" value="<%=reserveDetail.total %>">
+                                    <input type="hidden" name="reserveId" value="<%=reserveDetail._id%>" />
+                                    <input type="hidden" name="total" value="<%=reserveDetail.total %>" />
                                     <input type="hidden" name="description"
-                                        value="Payment for Reserve ID : <%=reserveDetail._id%>">
-                                    <input type="hidden" name="mobile" value="<%= reserveDetail.mobile%>">
-                                    <input type="hidden" name="userName" value="<%= currUser.username%>">
-                                    <input type="hidden" name="userId" value="<%= currUser._id%>">
-                                    <input type="hidden" name="email" value="<%= currUser.email%>">
-                                    <input type="submit" value="Pay Now"
-                                        class="btn edit-btn btn-dark rounded-2 col-10 fw-bold shadow-none">
+                                        value="Payment for Reserve ID : <%=reserveDetail._id%>" />
+                                    <input type="hidden" name="mobile" value="<%= reserveDetail.mobile%>" />
+                                    <input type="hidden" name="userName" value="<%= currUser.username%>" />
+                                    <input type="hidden" name="userId" value="<%= currUser._id%>" />
+                                    <input type="hidden" name="email" value="<%= currUser.email%>" />
 
+                                    <button value="Pay Now"
+                                        class="btn btn-success rounded-2 fw-bold shadow-none border-0">
+                                        Pay Now
+                                    </button>
                                 </form>
-                                <br>
-                                <!-- <button class="btn btn-dark shadow-none edit-btn col-10 mb-3" type="button" data-bs-toggle="modal" data-bs-target="#cancelModel" name='btnCancel'>Cancel Booking</button> -->
-                                <!-- <a href="/reserve/<%=//reserveDetail.id%>/destroy" class="btn edit-btn btn-dark rounded-2 fw-bold shadow-none">Cancle Booking</a> -->
+                                <br />
                                 <form action="/user/<%= reserveDetail._id %>/destroy?_method=DELETE" method="POST">
-                                    <button class="btn edit-btn btn-dark rounded-2 col-10 fw-bold shadow-none"
-                                        id="btnCancle">Cancel Booking</button>
+                                    <button class="btn btn-dark edit-btn rounded-2 fw-bold shadow-none" type="button"
+                                        data-bs-toggle="modal" data-bs-target="#cancelModel" name="btnCancel">
+                                        Cancel Booking
+                                    </button>
+                                    <!-- Conformation pop-up  -->
+                                    <div class="modal fade col-12" id="cancelModel" data-bs-backdrop="static"
+                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header text-center">
+                                                    <h5 class="modal-title">
+                                                        Sailing Plans Changed? <br />
+                                                        We’ve Got You Covered.
+                                                    </h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h4>Cancellation Policy</h4>
+                                                    <ul>
+                                                        <strong>No Stress Refunds:</strong>
+                                                        <li>
+                                                            Cancel up to 48 hours before your check-in date for a
+                                                            full refund.
+                                                        </li>
+                                                        <strong>Late Cancellation:</strong>
+                                                        <li>
+                                                            For cancellations within 48 hours of arrival, a nominal
+                                                            fee applies.
+                                                        </li>
+                                                        <strong>Instant Confirmation:</strong>
+                                                        <li>
+                                                            Receive immediate email confirmation upon successful
+                                                            cancellation.
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit"
+                                                        class="btn edit-btn btn-dark rounded-2 fw-bold shadow-none">
+                                                        Confirm
+                                                    </button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </form>
                                 <% } else{%>
                                     <h4 class="text-success">Payment done</h4>
                                     <%}%>
-                                        <br/>
-                                        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-                                        <script
-                                            src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-
-                                        <script>
-                                            const btn = document.getElementById("btnCancle");
-                                            btn.addEventListener('click', (event) => {
-                                                if (!window.confirm("Are You Sure?")) { // Use window instead of windows
-                                                    event.preventDefault();
-                                                }
-                                            });
-
-
-                                            // Payment Script
-                                            $(document).ready(function () {
-                                                $('.pay-form').submit(function (e) {
-                                                    e.preventDefault();
-
-                                                    var formData = $(this).serialize();
-
-                                                    $.ajax({
-                                                        url: "/createOrder",
-                                                        type: "POST",
-                                                        data: formData,
-                                                        success: function (res) {
-                                                            if (res.success) {
-                                                                var options = {
-                                                                    "key": "" + res.key_id + "",
-                                                                    "amount": "" + res.amount + "",
-                                                                    "currency": "INR",
-                                                                    "name": "" + res.title + "",
-                                                                    "description": "" + res.description + "",
-                                                                    "order_id": "" + res.order_id + "",
-                                                                    "handler": function (response) {
-                                                                        alert("Payment Succeeded");
-                                                                        // window.open("/","_self")
-                                                                    },
-                                                                    "prefill": {
-                                                                        "contact": "" + res.contact + "",
-                                                                        "name": "" + res.name + "",
-                                                                        "email": "" + res.email + ""
-                                                                    },
-                                                                    "theme": {
-                                                                        "color": "#2300a3"
-                                                                    }
-                                                                };
-                                                                var razorpayObject = new Razorpay(options);
-                                                                razorpayObject.on('payment.failed', function (response) {
-                                                                    alert("Payment Failed");
-                                                                });
-                                                                razorpayObject.open();
-                                                            }
-                                                            else {
-                                                                alert(res.msg);
-                                                            }
-                                                        }
-                                                    })
-
-                                                });
-                                            });
-                                        </script>
-
                         </div>
-
                     </div>
+                    <br />
+                    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+                    <script>
+                        // Payment Script
+                        $(document).ready(function () {
+                            $(".pay-form").submit(function (e) {
+                                e.preventDefault();
+
+                                var formData = $(this).serialize();
+
+                                $.ajax({
+                                    url: "/createOrder",
+                                    type: "POST",
+                                    data: formData,
+                                    success: function (res) {
+                                        if (res.success) {
+                                            var options = {
+                                                key: "" + res.key_id + "",
+                                                amount: "" + res.amount + "",
+                                                currency: "INR",
+                                                name: "" + res.title + "",
+                                                description: "" + res.description + "",
+                                                order_id: "" + res.order_id + "",
+                                                handler: function (response) {
+                                                    alert("Payment Succeeded");
+                                                    // window.open("/","_self")
+                                                },
+                                                prefill: {
+                                                    contact: "" + res.contact + "",
+                                                    name: "" + res.name + "",
+                                                    email: "" + res.email + "",
+                                                },
+                                                theme: {
+                                                    color: "#2300a3",
+                                                },
+                                            };
+                                            var razorpayObject = new Razorpay(options);
+                                            razorpayObject.on("payment.failed", function (response) {
+                                                alert("Payment Failed");
+                                            });
+                                            razorpayObject.open();
+                                        } else {
+                                            alert(res.msg);
+                                        }
+                                    },
+                                });
+                            });
+                        });
+                    </script>
                 </div>
-            </div>
-        </div>
-        <%}%>
 
-             <!-- Conformation pop-up  -->
-            <!-- <div class="modal fade col-12" id="cancelModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <h5 class="modal-title">
-                    Sailing Plans Changed? <br> We’ve Got You Covered.
-                </h5>
-            </div>
-            <div class="modal-body">
-                <h4>Cancellation Policy</h4>
-                <ul>                                        
-                    <strong>No Stress Refunds:</strong> 
-                    <li>Cancel up to 48 hours before your check-in date for a full refund.</li>
-                    <strong>Late Cancellation:</strong> 
-                    <li>For cancellations within 48 hours of arrival, a nominal fee applies.</li>
-                    <strong>Instant Confirmation:</strong> 
-                    <li>Receive immediate email confirmation upon successful cancellation.</li>
-                </ul>
-                
-            </div>
-            <div class="modal-footer">
-                <a href="/reserve/<%=//reserveDetail.id%>/destroy" class="btn edit-btn btn-dark rounded-2 fw-bold shadow-none">Confirm</a>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>                                
-            </div>                            
+                <%}%>
         </div>
-    </div>
-</div> -->
+    </body>

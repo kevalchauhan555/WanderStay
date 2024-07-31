@@ -40,96 +40,83 @@
   </style>
   <div id="filters">
     <div class="filter">
-      <a href="/filter/rooms"><i class="fa-solid fa-bed"></i>
-      <p>Rooms</p>
-    </a>
-    </div>
-    <div class="filter">
-      <a href="/filter/iconic"><i class="fa-solid fa-mountain-city"></i>
-      <p>Iconic Cities</p>
-    </a>
-    </div>
-    <div class="filter">
-      <a href="/filter/mountains"><i class="fa-solid fa-mountain-sun"></i>
-      <p>Mountains</p>
-    </a>
-    </div>
-    <div class="filter">
-      <a href="/filter/castles"><i class="fa-brands fa-fort-awesome"></i>
-      <p>Castles</p>
-    </a>
-    </div>
-    <div class="filter">
-      <a href="/filter/pools"><i class="fa-solid fa-person-swimming"></i>
-      <p>Amazing Pools</p>
-    </a>
-    </div>
-    <div class="filter">
-      <a href="/filter/camping"><i class="fa-solid fa-tents"></i>
-      <p>Camping</p>
+      <a href="/filter/rooms"
+        ><i class="fa-solid fa-bed"></i>
+        <p>Rooms</p>
       </a>
     </div>
     <div class="filter">
-      <a href="/filter/farms"><i class="fa-solid fa-tractor"></i>
-      <p>Farms</p>
-    </a>
+      <a href="/filter/iconic"
+        ><i class="fa-solid fa-mountain-city"></i>
+        <p>Iconic Cities</p>
+      </a>
     </div>
     <div class="filter">
-      <a href="/filter/dome"><i class="fa-solid fa-igloo"></i>
-      <p>Dome</p>
-    </a>
+      <a href="/filter/mountains"
+        ><i class="fa-solid fa-mountain-sun"></i>
+        <p>Mountains</p>
+      </a>
+    </div>
+    <div class="filter">
+      <a href="/filter/castles"
+        ><i class="fa-brands fa-fort-awesome"></i>
+        <p>Castles</p>
+      </a>
+    </div>
+    <div class="filter">
+      <a href="/filter/pools"
+        ><i class="fa-solid fa-person-swimming"></i>
+        <p>Amazing Pools</p>
+      </a>
+    </div>
+    <div class="filter">
+      <a href="/filter/camping"
+        ><i class="fa-solid fa-tents"></i>
+        <p>Camping</p>
+      </a>
+    </div>
+    <div class="filter">
+      <a href="/filter/farms"
+        ><i class="fa-solid fa-tractor"></i>
+        <p>Farms</p>
+      </a>
+    </div>
+    <div class="filter">
+      <a href="/filter/dome"
+        ><i class="fa-solid fa-igloo"></i>
+        <p>Dome</p>
+      </a>
     </div>
   </div>
 
   <!-- AUTO CHANGE IMAGE COROUSEL -->
 
   <div
-    id="myCarousel"
-    class="carousel slide px-lg-2 mt-4"
-    data-bs-ride="carousel"
-  >
+    id="carouselExampleSlidesOnly"
+    class="carousel slide"
+    data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img
           src="https://images.pexels.com/photos/1375383/pexels-photo-1375383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
           style="max-height: 25rem"
-          class="w-100 d-block"
-        />
-      </div>
-      <div class="carousel-item">
-        <img
-          src="https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-          style="max-height: 25rem"
-          class="w-100 d-block"
-        />
+          class="w-100 d-block" />
       </div>
       <div class="carousel-item">
         <img
           src="https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
           style="max-height: 25rem"
-          class="w-100 d-block"
-        />
+          class="w-100 d-block" />
+      </div>
+      <div class="carousel-item">
+        <img
+          src="https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          style="max-height: 25rem"
+          class="w-100 d-block" />
       </div>
     </div>
-    <button
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#myCarousel"
-      data-bs-slide="prev"
-    >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#myCarousel"
-      data-bs-slide="next"
-    >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
   </div>
+
   <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
     <%for(let listing of allListings){%>
     <a href="/listings/<%= listing._id%>" class="listing-link">
@@ -138,8 +125,7 @@
           src="<%= listing.image.url %>"
           class="card-img-top"
           alt="listing_image"
-          style="height: 20rem"
-        />
+          style="height: 20rem" />
         <div class="card-img-overlay"></div>
         <div class="card-body">
           <p class="card-text">
@@ -151,25 +137,4 @@
     </a>
     <%}%>
   </div>
-  <script>
-    let taxSwitch = document.getElementById("flexSwitchCheckDefault");
-    taxSwitch.addEventListener("click", () => {
-      let taxInfo = document.getElementsByClassName("tax-info");
-      for (info of taxInfo) {
-        if (info.style.display != "inline") {
-          info.style.display = "inline";
-        } else {
-          info.style.display = "none";
-        }
-      }
-    });
-
-    const myCarouselElement = document.querySelector("#myCarousel");
-    const carousel = new bootstrap.Carousel(myCarouselElement, {
-      interval: 100,
-      loop: true,
-    });
-
-    // Assuming your base URL
-  </script>
 </body>

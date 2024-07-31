@@ -2,8 +2,9 @@ const Listing = require("../models/listing.js");
 const Reserve = require("../models/reserve.js");
 const Payment = require("../models/payment.js");
 
-const { sendMail } = require("../utils/mail.js");
+const { sendMail, sendCancleMail } = require("../utils/mail.js");
 
+//Render Booking Form
 module.exports.renderReserveForm = async (req, res) => {
   let { id } = req.params;
   const listing = await Listing.findById(id);
@@ -14,6 +15,7 @@ module.exports.renderReserveForm = async (req, res) => {
   res.render("reserve/reserve.ejs", { listing });
 };
 
+//Make a Reserve
 module.exports.addReserve = async (req, res) => {
   let listing = await Listing.findById(req.params.id);
   let listingPrice = listing.price;
@@ -41,6 +43,7 @@ module.exports.addReserve = async (req, res) => {
   res.render("reserve/showReserve.ejs", { reserveDetail, listing });
 };
 
+//all booking details
 module.exports.allReserve = async (req, res) => {
   let reserveDetails = await Reserve.find({
     reserveby: req.user.id,
@@ -55,9 +58,15 @@ module.exports.allReserve = async (req, res) => {
   res.render("reserve/reserveDetails.ejs", { reserveDetails });
 };
 
+//Cancle Booking
 module.exports.destroy = async (req, res) => {
   let { id } = req.params;
-  await Reserve.findByIdAndDelete(id);
+  let cancle = await Reserve.findByIdAndDelete(id);
+  if (cancle) {
+    let email = req.user.email;
+    let username = req.user.username;
+    sendCancleMail(email, username);
+  }
   req.flash("success", "Booking Cancle Successfully!");
   res.redirect("/listings");
 };
