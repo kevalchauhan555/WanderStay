@@ -1,4 +1,4 @@
-const { types, required } = require("joi");
+const { types, required, boolean } = require("joi");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Listing = require("./listing");
@@ -22,11 +22,15 @@ const reserveSchema = new Schema({
   children: {
     type: Number,
     min: 0,
-    max: 4,
+    max: 2,
     required: false,
   },
   mobile: {
     type: Number,
+    required: true,
+  },
+  identity: {
+    type: String,
     required: true,
   },
   total: {
@@ -36,10 +40,16 @@ const reserveSchema = new Schema({
   reserveby: {
     type: Schema.Types.ObjectId,
     ref: "User",
+    required: true,
   },
   listing: {
     type: Schema.Types.ObjectId,
     ref: "Listing",
+    required: true,
+  },
+  isCancelled: {
+    type: Boolean,
+    default: false,
   },
   payment: {
     type: Schema.Types.ObjectId,

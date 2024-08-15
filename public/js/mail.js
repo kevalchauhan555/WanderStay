@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-module.exports.sendMail = (to, username, Checkin, Checkout, total) => {
+module.exports.sendReserveMail = (to, username, Checkin, Checkout, total) => {
   let mailer = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -46,7 +46,7 @@ wanderstay247@gmail.com`,
 
 //When Booking Are cancle then this mail is send
 
-module.exports.sendCancleMail = (to, username) => {
+module.exports.sendCancellationMail = (to, username) => {
   let mailer = nodemailer.createTransport({
     service: "gmail",
     auth: {

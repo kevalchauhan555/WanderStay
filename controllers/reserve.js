@@ -1,30 +1,20 @@
 const Listing = require("../models/listing.js");
 const Reserve = require("../models/reserve.js");
-const Payment = require("../models/payment.js");
 
-const { sendMail, sendCancleMail } = require("../utils/mail.js");
+const { sendReserveMail } = require("../public/js/mail.js");
 
-//Render Booking Form
 module.exports.renderReserveForm = async (req, res) => {
   let { id } = req.params;
   const listing = await Listing.findById(id);
   if (!listing) {
     req.flash("error", "Listing you requested for dose not exist");
-    res.redirect("/listing");
+    res.redirect("/listings");
   }
   res.render("reserve/reserve.ejs", { listing });
 };
 
-//Make a Reserve
 module.exports.addReserve = async (req, res) => {
   let listing = await Listing.findById(req.params.id);
-  let listingPrice = listing.price;
-
-  let checkinDate = new Date(req.body.reserve.checkin);
-  let checkoutDate = new Date(req.body.reserve.checkout);
-  let timeDiff = Math.abs(checkoutDate.getTime() - checkinDate.getTime());
-  let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-  let total = diffDays * listingPrice;
 
   let reserve = new Reserve(req.body.reserve);
 
@@ -33,40 +23,18 @@ module.exports.addReserve = async (req, res) => {
 
   reserve.reserveby = req.user._id;
   reserve.listing = listing._id;
-  reserve.total = total;
   let reserveDetail = await reserve.save();
-
+  listing.isReserved = true;
+  await listing.save();
   if (reserveDetail) {
-    sendMail(email, username, reserve.checkin, reserve.checkout, total);
+    sendReserveMail(
+      email,
+      username,
+      reserve.checkin,
+      reserve.checkout,
+      reserve.total
+    );
   }
   req.flash("success", "Booking Confirm!");
-  res.render("reserve/showReserve.ejs", { reserveDetail, listing });
-};
-
-//all booking details
-module.exports.allReserve = async (req, res) => {
-  let reserveDetails = await Reserve.find({
-    reserveby: req.user.id,
-  })
-    .populate("listing")
-    .populate("payment");
-
-  if (reserveDetails.length == 0) {
-    req.flash("error", "No Detail Found For This User");
-    res.redirect("/listings");
-  }
-  res.render("reserve/reserveDetails.ejs", { reserveDetails });
-};
-
-//Cancle Booking
-module.exports.destroy = async (req, res) => {
-  let { id } = req.params;
-  let cancle = await Reserve.findByIdAndDelete(id);
-  if (cancle) {
-    let email = req.user.email;
-    let username = req.user.username;
-    sendCancleMail(email, username);
-  }
-  req.flash("success", "Booking Cancle Successfully!");
-  res.redirect("/listings");
+  res.redirect(`/user/${req.user.id}/reserves`);
 };

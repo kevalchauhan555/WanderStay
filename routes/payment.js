@@ -1,8 +1,9 @@
-const express = require('express');
-const payment_route = express();
-const paymentController = require('../controllers/paymentController');
+const express = require("express");
+const router = express.Router({ mergeParams: true });
+const wrapAsync = require("../utils/wrapAsync.js");
+const paymentController = require("../controllers/payment.js");
 
-
-payment_route.post('/createOrder', paymentController.createOrder);
-
-module.exports = payment_route;
+router.post("/createOrder", wrapAsync(paymentController.createOrder));
+router.post("/validateSuccess", wrapAsync(paymentController.validateSuccess));
+router.post("/validateFailure", wrapAsync(paymentController.validateFailure));
+module.exports = router;

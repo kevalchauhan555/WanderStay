@@ -1,91 +1,62 @@
 <% layout("/layouts/boilerplat") %>
 
 <body>
-  <style>
-    #filters {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-evenly;
-    }
-    .filter {
-      text-align: center;
-      margin-right: 2rem;
-      margin-top: 2rem;
-      opacity: 0.7;
-    }
-    .filter a {
-      color: black;
-      text-decoration: none;
-    }
-    .filter:hover {
-      opacity: 1;
-      cursor: pointer;
-    }
-    .filter p {
-      font-size: 0.8rem;
-    }
-    .tax-info {
-      display: none;
-    }
-    .tax-toggle {
-      border: 1px solid #51454542;
-      border-radius: 0.5rem;
-      height: 2.5rem;
-      padding: 0.5rem;
-      display: flex;
-      align-items: center;
-      margin-top: 1rem;
-    }
-  </style>
-  <div id="filters">
-    <div class="filter">
-      <a href="/filter/rooms"
-        ><i class="fa-solid fa-bed"></i>
-        <p>Rooms</p>
-      </a>
+  <div class="filters">
+    <div class="arrow" id="scrollLeft">
+      <i class="fa-solid fa-caret-left"></i>
     </div>
-    <div class="filter">
-      <a href="/filter/iconic"
-        ><i class="fa-solid fa-mountain-city"></i>
-        <p>Iconic Cities</p>
-      </a>
+    <div class="owl-carousel owl-theme">
+      <div class="item filter">
+        <a href="/filter/rooms"
+          ><i class="fa-solid fa-bed"></i>
+          <p>Rooms</p>
+        </a>
+      </div>
+      <div class="item filter">
+        <a href="/filter/iconic"
+          ><i class="fa-solid fa-mountain-city"></i>
+          <p>Iconic Cities</p>
+        </a>
+      </div>
+      <div class="item filter">
+        <a href="/filter/mountains"
+          ><i class="fa-solid fa-mountain-sun"></i>
+          <p>Mountains</p>
+        </a>
+      </div>
+      <div class="item filter">
+        <a href="/filter/castles"
+          ><i class="fa-brands fa-fort-awesome"></i>
+          <p>Castles</p>
+        </a>
+      </div>
+      <div class="item filter">
+        <a href="/filter/pools"
+          ><i class="fa-solid fa-person-swimming"></i>
+          <p>Amazing Pools</p>
+        </a>
+      </div>
+      <div class="item filter">
+        <a href="/filter/camping"
+          ><i class="fa-solid fa-tents"></i>
+          <p>Camping</p>
+        </a>
+      </div>
+      <div class="item filter">
+        <a href="/filter/farms"
+          ><i class="fa-solid fa-tractor"></i>
+          <p>Farms</p>
+        </a>
+      </div>
+      <div class="item filter">
+        <a href="/filter/dome"
+          ><i class="fa-solid fa-igloo"></i>
+          <p>Dome</p>
+        </a>
+      </div>
     </div>
-    <div class="filter">
-      <a href="/filter/mountains"
-        ><i class="fa-solid fa-mountain-sun"></i>
-        <p>Mountains</p>
-      </a>
-    </div>
-    <div class="filter">
-      <a href="/filter/castles"
-        ><i class="fa-brands fa-fort-awesome"></i>
-        <p>Castles</p>
-      </a>
-    </div>
-    <div class="filter">
-      <a href="/filter/pools"
-        ><i class="fa-solid fa-person-swimming"></i>
-        <p>Amazing Pools</p>
-      </a>
-    </div>
-    <div class="filter">
-      <a href="/filter/camping"
-        ><i class="fa-solid fa-tents"></i>
-        <p>Camping</p>
-      </a>
-    </div>
-    <div class="filter">
-      <a href="/filter/farms"
-        ><i class="fa-solid fa-tractor"></i>
-        <p>Farms</p>
-      </a>
-    </div>
-    <div class="filter">
-      <a href="/filter/dome"
-        ><i class="fa-solid fa-igloo"></i>
-        <p>Dome</p>
-      </a>
+    <div class="arrow" id="scrollLeft">
+      <i class="fa-solid fa-caret-right" id="scrollRight"></i>
     </div>
   </div>
 
@@ -119,7 +90,7 @@
 
   <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
     <%for(let listing of allListings){%>
-    <a href="/listings/<%= listing._id%>" class="listing-link">
+    <a href="/listings/<%= listing._id%>" class="listing-links">
       <div class="card col listing-card">
         <img
           src="<%= listing.image.url %>"
@@ -138,3 +109,42 @@
     <%}%>
   </div>
 </body>
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+  integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"></script>
+<script>
+  $(".owl-carousel").owlCarousel({
+    loop: true,
+    margin: 10,
+    nav: false,
+    dots: false,
+    stagePadding: 10,
+    responsive: {
+      0: {
+        items: 3,
+      },
+      576: {
+        items: 5,
+      },
+      1000: {
+        items: 8,
+      },
+    },
+  });
+
+  document.getElementById("scrollLeft").addEventListener("click", function () {
+    $(".owl-carousel").trigger("prev.owl.carousel");
+  });
+
+  document.getElementById("scrollRight").addEventListener("click", function () {
+    $(".owl-carousel").trigger("next.owl.carousel");
+  });
+</script>
