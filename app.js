@@ -14,6 +14,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
+const Reserve = require("./models/reserve");
 
 const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
@@ -97,6 +98,8 @@ app.use("/user/:id/reserves/:id/payment", paymentRouter);
 app.use("/", authRouter);
 app.use("/filter", filterRoute);
 
+
+
 app.all("*", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found"));
 });
@@ -108,6 +111,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error.ejs", { message });
 });
 
-app.listen(8588, () => {
+app.listen(9888, () => {
   console.log("Server Start started at port http://localhost:8588/listings");
 });

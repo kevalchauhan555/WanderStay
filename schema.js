@@ -26,6 +26,7 @@ module.exports.reserveSchema = Joi.object({
     adult: Joi.number().required().min(1).max(4),
     children: Joi.number().min(0).max(2),
     mobile: Joi.number().required(),
+    pricePerNight: Joi.number(),
     total: Joi.number().required(),
     identity: Joi.string().required(),
   }).required(),

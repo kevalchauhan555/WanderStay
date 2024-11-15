@@ -33,6 +33,10 @@ const reserveSchema = new Schema({
     type: String,
     required: true,
   },
+  pricePerNight: {
+    type: Number,
+    // required: true
+  },
   total: {
     type: Number,
     required: true,

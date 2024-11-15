@@ -50,6 +50,7 @@ const checkout = document.getElementById("checkout");
 
 document.addEventListener("DOMContentLoaded", function () {
   let totalPriceElement = document.getElementById("totalPrice");
+  let pricePerNight = document.getElementById("pricePerNight").value;
 
   checkin.addEventListener("change", updateTotalPrice);
   checkout.addEventListener("change", updateTotalPrice);

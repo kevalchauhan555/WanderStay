@@ -11,7 +11,7 @@
         <%=listing.title%>
       </h3>
     </div>
-    <div class="card col-lg-6 offset-lg-3 show-card listing-card">
+    <div class="card col-lg-7 offset-lg-3 show-card listing-card">
       <img src="<%=listing.image.url%>" class="card-img-top show-img" alt="Listing-image" />
       <div class="card-body">
         <p class="card-text">Owned by <i>
@@ -41,9 +41,11 @@
             <button type="submit" class="btn btn-dark offset-5">Delete</button>
           </form>
           <div class="form-check form-switch mx-5">
-            <input class="form-check-input" type="checkbox" role="switch" id="reserved" <%if(listing.isReserved==true){%>checked<%}%>>
+            <input class="form-check-input" type="checkbox" role="switch" id="reserved"
+              <%if(listing.isReserved==true){%>checked<%}%>>
               <label class="form-check-label" for="reserved"><b>Reserved</b></label>
           </div>
+
         </div>
       </div>
 
@@ -71,9 +73,38 @@
         <%}%>
 
     </div>
-    <div class="col-lg-6 col-12 offset-lg-3 mb-3">
+    <div class="col-lg-7 col-12 offset-lg-3 mb-3">
       <h3>Your Property Location</h3>
       <div id="map" class="w-100"></div>
+    </div>
+
+    <div class="col-lg-7 col-12 offset-lg-3 mb-3">
+      <table class="table table-striped">
+        <tr>
+          <th>Customer Name</th>
+          <th>Checkin Date</th>
+          <th>Checkout Date</th>
+          <th>Rent Per Night</th>
+          <th>Total Amount</th>
+        </tr>
+
+        <%for(d of data){%>
+          <tr>
+            <td>
+              <%= d.reserveby.username %>
+            </td>
+            <td>
+              <%=d.checkin.toString().split(" ").slice(0,4).join(" -")%>
+            </td>
+            <td>
+              <%= d.checkout.toString().split(" ").slice(0,4).join(" -")%>
+            </td>
+            <td><%=d.pricePerNight%></td>
+            <td>&#8377;<%=d.total.toLocaleString("en-IN")%></td>
+          </tr>
+          <%}%>
+
+      </table>
     </div>
   </div>
   <script>
@@ -82,4 +113,5 @@
       await axios.put("/listings/<%= listing._id%>/free", { isReserved: checkbox.checked });
     });
   </script>
+
   <script src="/js/map.js"></script>

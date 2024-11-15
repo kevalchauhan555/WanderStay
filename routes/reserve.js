@@ -6,6 +6,7 @@ const {
   isLoggedIn,
   isNotOwnerForBooking,
   isReserved,
+  isLoggedInForBooking,
 } = require("../middleware.js");
 const reserveController = require("../controllers/reserve.js");
 
@@ -13,7 +14,7 @@ const reserveController = require("../controllers/reserve.js");
 router
   .route("/")
   .get(
-    isLoggedIn,
+    isLoggedInForBooking,
     isNotOwnerForBooking,
     wrapAsync(reserveController.renderReserveForm)
   )

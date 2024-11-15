@@ -46,7 +46,8 @@ module.exports.showListing = async (req, res) => {
   let { id } = req.params;
 
   await Reserve.find({ listing: id });
-
+  let data = await Reserve.find({listing:id}).populate("reserveby");
+  
   const listing = await Listing.findById(id)
     .populate({ path: "reviews", populate: { path: "author" } })
     .populate("owner");
@@ -55,7 +56,7 @@ module.exports.showListing = async (req, res) => {
     res.redirect("/listings");
   }
   if (req.user && req.user._id.equals(listing.owner._id)) {
-    res.render("listing/show.ejs", { listing });
+    res.render("listing/show.ejs", { listing ,data});
   } else {
     res.render("users/userShow.ejs", { listing });
   }
