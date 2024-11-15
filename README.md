@@ -1,7 +1,7 @@
-#WanderStay
+# WanderStay
 WanderStay is a home-sharing platform that connects hosts with travelers looking for unique accommodations around the world. Whether you’re seeking a cozy apartment in the city or a serene beach house, Wanderlust makes it easy to find and book the perfect place for your stay.
 
-#Features
+# Features
 Search Listings: Browse and search for accommodations by location, price, amenities, and more.
 Booking System: Easily book your stay and manage your reservations.
 Host Dashboard: Manage your listings, bookings, and communications with guests.
@@ -13,14 +13,14 @@ Backend - ExpressJS, NodeJS.
 DATA - MongoDB.
 IDE - VS CODE.
 
-#Getting Started
+# Getting Started
 Clone the repository:
 bash: git clone https://github.com/kevalchauhan555/WanderStay.git
 
-#Install dependencies
+# Install dependencies
 Get : npm install
 
-#Set your env variable
+# Set your env variable
 [Cloudinary]: CLOUD_NAME
 [Cloudinary]: CLOUD_API_KEY
 [Cloudinary]: CLOUD_API_SECRET
